@@ -1,8 +1,8 @@
 namespace com.cy.isat;
-//using { managed } from '@sap/cds/common';
+
+using {managed} from '@sap/cds/common';
 
 
-//UUID instead of Integer
 entity Customers {
     key autoid      : Integer;
         custid      : String(10);
@@ -20,19 +20,19 @@ entity Projects {
 }
 
 entity Customers_Projects {
-    key autoid : Integer;
-        custid : Association to Customers;
-        projid : Association to Projects;
+    key autoid      : Integer;
+        customer_id : Association to Customers;
+        proj_id     : Association to Projects;
 }
 
 entity Users {
-    key autoid : Integer;
-        userid : String(10);
-        name   : String(20);
-        role   : String(10);
-        active : Boolean;
+    key autoid  : Integer;
+        userid  : String(10);
+        name    : String(20);
+        role    : String(10);
+        active  : Boolean;
         emailid : String(20) @assert.valid.email;
-        custid : String(10);
+        custid  : String(10);
 }
 
 entity Roles {
@@ -51,16 +51,16 @@ entity Teams {
 }
 
 entity Teams_Users {
-    key autoid : Integer;
-        teamid : Association to Teams;
-        userid : Association to Users;
-        active : Boolean;
+    key autoid  : Integer;
+        team_id : Association to Teams;
+        user_id : Association to Users;
+        active  : Boolean;
 }
 
 entity Users_Roles {
-    key autoid : Integer;
-        userid : Association to Users;
-        roleid : Association to Roles;
+    key autoid  : Integer;
+        user_id : Association to Users;
+        role_id : Association to Roles;
 }
 
 entity Tasklist {
@@ -72,20 +72,19 @@ entity Tasklist {
 
 
 //here we can use managed aspect
-entity Tasks {
-    key autoid           : Integer;
-        task_name        : String(20);
-        duration         : String(20);
-        startdate        : Date; 
-        enddate          : Date;
-        status           : String(10);
-        type             : String(10);
-        parent_task_id      : Integer;    //any specific relation --task list id 
-        assigned_to      : String(20);
-        created_by       : String(20);
-        updated_datetime : DateTime;
-        created_datetime : DateTime;
-        tasklist_id      : Association to Tasklist;
+entity Tasks : managed {
+    key autoid         : Integer;
+        task_name      : String(20);
+        duration       : String(20);
+        startdate      : Date;
+        enddate        : Date;
+        status         : String(10);
+        type           : String(10);
+        parent_task_id : Integer;
+        // created_by       : String(20);
+        //  updated_datetime : DateTime;
+        // created_datetime : DateTime;
+        tasklist_id    : Association to Tasklist;
 }
 
 entity TimeCapture {
@@ -110,9 +109,9 @@ entity Component {
 // }
 
 entity Component_TaskList {
-    key autoid      : Integer;
-        compid      : Association to Component;
-        tasklist_id : Association to Tasklist;
+    key autoid       : Integer;
+        component_id : Association to Component;
+        tasklist_id  : Association to Tasklist;
 }
 
 entity Comments {
@@ -140,13 +139,41 @@ entity Phases {
 
 
 entity Component_Stages {
-    key autoid : Integer;
-        compid : Association to Component;
+    key autoid       : Integer;
+        component_id : Association to Component;
+        stage_id     : Association to Stages;
 }
 
 
 entity Stages {
-    key autoid     : Integer;
-    name : String(2);
+    key autoid      : Integer;
+        name        : String(20);
+        description : String(100);
 
+}
+
+
+entity DDData {
+    key autoid : Integer;
+        name   : String(20);
+        type   : String(10);
+}
+
+
+entity InterfaceDetails {
+     key autoid         : Integer;
+    component_id   : Association to Component;
+    module         : String(10);
+    package        : String(20);
+    senderssystem  : String(20);
+    receiversystem : String(20);
+    process        : String(20);
+    sourceadapter  : String(20);
+    targetadapter  : String(20);
+    techpoc        : Integer;
+    functionalpoc  : String(200);
+    businesspoc    : Integer;
+    doctype        : String(200);
+    frequency      : String(20);
+    ccenabled      : Boolean;
 }

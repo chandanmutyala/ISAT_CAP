@@ -21,7 +21,35 @@
   },
   "cds": {
     "requires": {
-      "auth": "xsuaa",
+      "auth": {
+        "[production]": {
+          "strategy": "xsuaa"
+        },
+        "[development]": {
+          "strategy": "mock",
+          "users": {
+            "User": {
+              "roles": [
+                "developer"
+              ],
+              "email": "user@gmail.com",
+              "name": "User1"
+            }
+          }
+        }
+      },
+      "db": {
+        "[production]": {
+          "kind": "hana"
+        },
+        "[development]": {
+          "kind": "sqlite"
+        },
+        "model": [
+          "db",
+          "srv"
+        ]
+      },
       "application-logging": true
     }
   }
