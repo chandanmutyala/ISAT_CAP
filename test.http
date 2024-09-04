@@ -1,0 +1,29 @@
+###
+POST http://localhost:4004/odata/v4/sat-srv/Customers
+Content-Type: application/json
+
+{
+    "custid":"CUST_001",
+    "name":"James Miller",
+    "location":"Canada",
+    "description":"SAP customer"
+}
+
+###
+GET http://localhost:4004/odata/v4/sat-srv/Customers
+
+###
+PUT http://localhost:4004/odata/v4/sat-srv/Customers/1
+Content-Type: application/json
+
+{
+    "autoid":1,
+    "custid":"CUST_001",
+    "name":"James Miller",
+    "location":"Eurpe",
+    "description":"SAP customer" 
+}
+
+###
+DELETE  http://localhost:4004/odata/v4/sat-srv/Customers/1
+
